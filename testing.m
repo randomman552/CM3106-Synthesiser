@@ -14,22 +14,34 @@ yCut = sliceSamples(y, 1, N);
 yCutFft = fft(yCut);
 
 % Normalised frequencies
-lowerFreq = 0.1;
+lowerFreq = 0.2;
 upperFreq = 1;
 
-filter = fourierBandpass(N, lowerFreq, upperFreq);
+filter = fourierBandpass(N, lowerFreq, upperFreq, false);
 
 % Apply bandpass to cut sample
 yCutFft = yCutFft .* filter;
 
-
-%yMag = abs(yFourier);
-%plot(yMag(1:end/2));
-
 % Perform subtractive synthesis
 yfft = yfft - yCutFft;
 
+
 % Recover data with inverse fourier
 y = real(ifft(yfft));
-sound(y, Fs);
-spectrogram(y, 100);
+player = audioplayer(y, Fs);
+
+play(player);
+
+
+
+% Plot magnitudes
+yMag = abs(yfft);
+yCutMag = abs(yCutFft);
+
+subplot(2, 1, 1);
+plot(yMag);
+subplot(2, 1, 2);
+plot(yCutMag)
+
+
+%spectrogram(y, 100);

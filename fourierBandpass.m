@@ -29,15 +29,18 @@ function filter = fourierBandpass(N, lowFreq, highFreq, stop)
         error("Invalid arguments: highFreq must be <= 1")
     end
 
+    nyquist = N/2;
+
     % Initalise filter with all zeros
     filter = zeros(N, 1);
 
     % Calculate cutoff points
-    lowCutoff = ceil(max(lowFreq * N, 1));
-    highCutoff = floor(highFreq * N);
+    lowCutoff = ceil(max(lowFreq * nyquist, 1));
+    highCutoff = floor(highFreq * nyquist);
 
     % Set area within cutoff area to 1
     filter(lowCutoff:highCutoff) = 1;
+    filter(end-highCutoff:end-lowCutoff) = 1;
     
     % Invert the filter if bandstop requested
     if stop
