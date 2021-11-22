@@ -1,13 +1,18 @@
-fullPath = "./samples/drums.wav";
+samplePath = "./samples/drums.wav";
 
-% Read audio sample in
-[y, Fs] = audioread(fullPath);
+% Read audio samples in
+[y, Fs] = audioread(samplePath);
 y = y(:, 1);
-N = length(y);
-nyquist = N / 2;
 
+% Perform convolution
+% y = conv(y1, y1);
+% y = y ./ max(y);
 
-s = stft(y, Fs);
-s = s - stftBandpass(s, 0.1, 0.9, 0, 0.5);
-y = real(istft(s));
+pitch = 1;
+tempo = 1;
+y = pvoc(y, ((2/pitch)/(2*pitch)) * tempo);
+y = y(1:(2*pitch)/(2/pitch):end);
 sound(y, Fs);
+
+% y = real(istft(ystft, Fs));
+% sound(y, Fs);
