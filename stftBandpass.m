@@ -1,4 +1,4 @@
-function result = stftBandpass(s, freqStart, freqEnd, sampleStart, sampleEnd, stop)
+function filter = stftBandpass(s, freqStart, freqEnd, sampleStart, sampleEnd, stop)
     % Creates and then applies a bandpass/stop filter to a stft.
     % Arguments:
     %   freqStart: Normalised frequency to start at
@@ -33,40 +33,32 @@ function result = stftBandpass(s, freqStart, freqEnd, sampleStart, sampleEnd, st
     end
 
 
-    filter = zeros(size(s));
-    % The midpoint in the frequency dimension is the zero point of the frequencies it represents
-    mid = size(s, 1) / 2;
+    filter = zeros(size(s,1)/2, size(s, 2));
 
-
-    % Convert normalised values to real values
-    freqCutoffStart = floor(freqStart * mid);
-    freqCutoffEnd = ceil(freqEnd * mid);
-    timeCutoffStart = floor(sampleStart * size(s, 2));
-    timeCutoffEnd = ceil(sampleEnd * size(s, 2));
+    % Generate cutoff points to generate the filter
+    minX = max(floor(sampleStart * size(filter, 2)), 1);
+    maxX = min(floor(sampleEnd * size(filter, 2)), size(filter, 2));
+    minY = max(floor(freqStart * size(filter, 1)), 1);
+    maxY = min(floor(freqEnd * size(filter, 1)), size(filter, 1));
 
 
     % Ensure values adhere to 1 indexing
-    freqCutoffStart = max(freqCutoffStart, 1);
-    timeCutoffStart = max(timeCutoffStart, 1);
+    minY = max(minY, 1);
+    minX = max(minX, 1);
     % Ensure cutoff max values are not above size of the array
-    freqCutoffEnd = min(freqCutoffEnd, size(s, 1));
-    timeCutoffEnd = min(timeCutoffEnd, size(s, 2));
+    maxY = min(maxY, size(s, 1));
+    maxX = min(maxX, size(s, 2));
 
-
-    % Generate cutoff arrays to generate the filter
-    freqCutoff1 = mid+freqCutoffStart:mid+freqCutoffEnd;
-    freqCutoff2 = (mid-freqCutoffEnd)+1:(mid-freqCutoffStart)+1;
-    timeCutoff = timeCutoffStart:timeCutoffEnd;
     
     % Create the filter
-    filter(freqCutoff1, timeCutoff) = 1;
-    filter(freqCutoff2, timeCutoff) = 1;
+    filter(minY:maxY, minX:maxX) = 1;
+
 
     % Invert if stop is true
     if stop
         filter = abs(filter - 1);
     end
-    
-    % Apply the filter and return the result
-    result = s .* filter;
+
+    % Mirror filter to make it apply to whole stft
+    filter = [filter(end:-1:1,:); filter];
 end
