@@ -1,4 +1,18 @@
-# CM3106-Coursework
+# Matlab Graphical Synthesiser
+Graphical synthesiser app made for MATLAB
+<img src=".github/preview.png" style="width: 100%"/>
+
+## Dependencies
+- DSP Toolbox for MATLAB
+
+## Running
+To run the program:
+1. Clone the repository
+2. Open the folder in MATLAB
+3. Open Synthesiser.mlapp in MATLAB
+4. Click run
+
+## Sample attribution
 - Convolution samples from: [Joshua Casper](https://www.joshuacasper.com/ableton-tutorials/synthetic-prototypes/)
   - [echo.wav](http://www.mediafire.com/download/o97echtbbyj1lxg/JC-IR-Synthetic-Prototypes.zip)
   - [cave.wav](http://www.mediafire.com/download/o97echtbbyj1lxg/JC-IR-Synthetic-Prototypes.zip)
