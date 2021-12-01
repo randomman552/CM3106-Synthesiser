@@ -20,7 +20,7 @@ Choose one of the following methods to run the program
 3. run Synthesiser.m with the command: `Synthesiser`
 
 ### Install to app into MATLAB
-1. Go to [releases](https://github.com/randomman552/CM3106-Coursework/releases/tag/release)
+1. Go to [releases](https://github.com/randomman552/CM3106-Coursework/releases)
 2. Download `Synthesiser.mlappinstall`
 3. Run the file in MATLAB to install as an app
 

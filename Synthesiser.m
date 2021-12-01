@@ -247,8 +247,7 @@ classdef Synthesiser < matlab.apps.AppBase
             title(axes, "Spectrogram - " + app.sampleName);
 
             if app.focusedGraph == "spectrogram" && ~isempty(app.sample)
-                y = app.sample;
-                N = length(y);
+                N = length(app.resultantAudio);
                 Fs = app.sampleRate;
                 S = app.sampleSpectrogram;
                 
@@ -510,12 +509,7 @@ classdef Synthesiser < matlab.apps.AppBase
             % Invalidate the cache
             app.resultantAudio = [];
 
-            yStft = app.sampleStft;
-            yStft = app.processAudioEqualiser(yStft);
-            yStft = app.processAudioGraphical(yStft);
-
-            % Invert fourier transform
-            y = real(istft(yStft));
+            y = app.sample;
 
             % Apply convolution
             y = app.processAudioConvolution(y);
@@ -525,6 +519,14 @@ classdef Synthesiser < matlab.apps.AppBase
 
             % Apply envelope
             y = app.processAudioEnvelope(y);
+
+            % Apply equalisation
+            app.resultantAudio = y;
+            [app.sampleSpectrogram, ~, ~] = spectrogram(y, 100);
+            yStft = stft(y);
+            yStft = app.processAudioGraphical(yStft);
+            yStft = app.processAudioEqualiser(yStft);
+            y = real(istft(yStft));
            
             % Finally, apply post amplification
             results = y .* app.postAmp;
@@ -583,7 +585,7 @@ classdef Synthesiser < matlab.apps.AppBase
                 return
             end
             
-            dur = length(app.sample)/app.sampleRate;
+            dur = length(app.resultantAudio)/app.sampleRate;
             filter = ones(size(yStft));
             
             % Generate mask to apply to the stft

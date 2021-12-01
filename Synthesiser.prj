@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration build-checksum="3591205255" file="/home/george/Nextcloud/UNI/Year 3/CM3106 - Multimedia/Coursework/CM3106-Coursework/Synthesiser.prj" location="/home/george/Nextcloud/UNI/Year 3/CM3106 - Multimedia/Coursework/CM3106-Coursework" name="Synthesiser" target="target.mlapps" target-name="Package App">
+  <configuration build-checksum="2742543921" file="/home/george/Nextcloud/UNI/Year 3/CM3106 - Multimedia/Coursework/CM3106-Coursework/Synthesiser.prj" location="/home/george/Nextcloud/UNI/Year 3/CM3106 - Multimedia/Coursework/CM3106-Coursework" name="Synthesiser" target="target.mlapps" target-name="Package App">
     <param.appname>Synthesiser</param.appname>
     <param.authnamewatermark>George Grainger</param.authnamewatermark>
     <param.email>GraingerGY@cardiff.ac.uk</param.email>
@@ -13,7 +13,7 @@
     <param.summary />
     <param.description>Graphical synthesiser for MATLAB</param.description>
     <param.screenshot>${PROJECT_ROOT}/.github/preview.png</param.screenshot>
-    <param.version>1.0</param.version>
+    <param.version>1.0.1</param.version>
     <param.products.name>
       <item>MATLAB</item>
       <item>Audio Toolbox</item>
@@ -37,7 +37,6 @@
     <param.guid>a7cde3b4-15e9-4de5-96f1-6e881df3a338</param.guid>
     <unset>
       <param.summary />
-      <param.version />
       <param.platforms />
       <param.output />
     </unset>
